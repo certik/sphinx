@@ -1,0 +1,895 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The build configuration file &mdash; Sphinx v0.6.2 documentation</title>
+    <link rel="stylesheet" href="static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Sphinx v0.6.2 documentation"
+          href="static/opensearch.xml"/>
+    <link rel="top" title="Sphinx v0.6.2 documentation" href="index.html" />
+    <link rel="next" title="HTML theming support" href="theming.html" />
+    <link rel="prev" title="Available builders" href="builders.html" /> 
+  </head>
+  <body>
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<img src="static/sphinx.png" alt="Sphinx logo" />
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="theming.html" title="HTML theming support"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="builders.html" title="Available builders"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">Documentation</a>&raquo;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="contents.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">The build configuration file</a><ul>
+<li><a class="reference external" href="#general-configuration">General configuration</a></li>
+<li><a class="reference external" href="#project-information">Project information</a></li>
+<li><a class="reference external" href="#options-for-html-output">Options for HTML output</a></li>
+<li><a class="reference external" href="#options-for-latex-output">Options for LaTeX output</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="builders.html"
+                                  title="previous chapter">Available builders</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="theming.html"
+                                  title="next chapter">HTML theming support</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/config.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-conf">
+<h1>The build configuration file<a class="headerlink" href="#module-conf" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference external" href="glossary.html#term-configuration-directory"><em class="xref">configuration directory</em></a> must contain a file named <tt class="docutils literal"><span class="pre">conf.py</span></tt>.
+This file (containing Python code) is called the &#8220;build configuration file&#8221; and
+contains all configuration needed to customize Sphinx input and output behavior.</p>
+<p>The configuration file is executed as Python code at build time (using
+<tt class="xref docutils literal"><span class="pre">execfile()</span></tt>, and with the current directory set to its containing
+directory), and therefore can execute arbitrarily complex code.  Sphinx then
+reads simple names from the file&#8217;s namespace as its configuration.</p>
+<p>Important points to note:</p>
+<ul class="simple">
+<li>If not otherwise documented, values must be strings, and their default is the
+empty string.</li>
+<li>The term &#8220;fully-qualified name&#8221; refers to a string that names an importable
+Python object inside a module; for example, the FQN
+<tt class="docutils literal"><span class="pre">&quot;sphinx.builders.Builder&quot;</span></tt> means the <tt class="docutils literal"><span class="pre">Builder</span></tt> class in the
+<tt class="docutils literal"><span class="pre">sphinx.builders</span></tt> module.</li>
+<li>Remember that document names use <tt class="docutils literal"><span class="pre">/</span></tt> as the path separator and don&#8217;t contain
+the file name extension.</li>
+<li>Since <tt class="docutils literal"><span class="pre">conf.py</span></tt> is read as a Python file, the usual rules apply for
+encodings and Unicode support: declare the encoding using an encoding cookie
+(a comment like <tt class="docutils literal"><span class="pre">#</span> <span class="pre">-*-</span> <span class="pre">coding:</span> <span class="pre">utf-8</span> <span class="pre">-*-</span></tt>) and use Unicode string literals
+when you include non-ASCII characters in configuration values.</li>
+<li>The contents of the config namespace are pickled (so that Sphinx can find out
+when configuration changes), so it may not contain unpickleable values &#8211;
+delete them from the namespace with <tt class="docutils literal"><span class="pre">del</span></tt> if appropriate.  Modules are
+removed automatically, so you don&#8217;t need to <tt class="docutils literal"><span class="pre">del</span></tt> your imports after use.</li>
+<li>There is a special object named <tt class="docutils literal"><span class="pre">tags</span></tt> available in the config file.
+It can be used to query and change the tags (see <a class="reference external" href="markup/misc.html#tags"><em>Including content based on tags</em></a>).  Use
+<tt class="docutils literal"><span class="pre">tags.has('tag')</span></tt> to query, <tt class="docutils literal"><span class="pre">tags.add('tag')</span></tt> and <tt class="docutils literal"><span class="pre">tags.remove('tag')</span></tt>
+to change.</li>
+</ul>
+<div class="section" id="general-configuration">
+<h2>General configuration<a class="headerlink" href="#general-configuration" title="Permalink to this headline">¶</a></h2>
+<dl class="confval">
+<dt id="confval-extensions">
+<tt class="descname">extensions</tt><a class="headerlink" href="#confval-extensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of strings that are module names of Sphinx extensions.  These can be
+extensions coming with Sphinx (named <tt class="docutils literal"><span class="pre">sphinx.ext.*</span></tt>) or custom ones.</p>
+<p>Note that you can extend <tt class="xref docutils literal"><span class="pre">sys.path</span></tt> within the conf file if your
+extensions live in another directory &#8211; but make sure you use absolute paths.
+If your extension path is relative to the <a class="reference external" href="glossary.html#term-configuration-directory"><em class="xref">configuration directory</em></a>,
+use <tt class="xref docutils literal"><span class="pre">os.path.abspath()</span></tt> like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;sphinxext&#39;</span><span class="p">))</span>
+
+<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;extname&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>That way, you can load an extension called <tt class="docutils literal"><span class="pre">extname</span></tt> from the subdirectory
+<tt class="docutils literal"><span class="pre">sphinxext</span></tt>.</p>
+<p>The configuration file itself can be an extension; for that, you only need to
+provide a <tt class="xref docutils literal"><span class="pre">setup()</span></tt> function in it.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-source_suffix">
+<tt class="descname">source_suffix</tt><a class="headerlink" href="#confval-source_suffix" title="Permalink to this definition">¶</a></dt>
+<dd>The file name extension of source files.  Only files with this suffix will be
+read as sources.  Default is <tt class="docutils literal"><span class="pre">'.rst'</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-source_encoding">
+<tt class="descname">source_encoding</tt><a class="headerlink" href="#confval-source_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>The encoding of all reST source files.  The recommended encoding, and the
+default value, is <tt class="docutils literal"><span class="pre">'utf-8-sig'</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.5: </span>Previously, Sphinx accepted only UTF-8 encoded sources.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-master_doc">
+<tt class="descname">master_doc</tt><a class="headerlink" href="#confval-master_doc" title="Permalink to this definition">¶</a></dt>
+<dd>The document name of the &#8220;master&#8221; document, that is, the document that
+contains the root <a class="reference external" href="concepts.html#dir-toctree"><tt class="xref docutils literal"><span class="pre">toctree</span></tt></a> directive.  Default is <tt class="docutils literal"><span class="pre">'contents'</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-unused_docs">
+<tt class="descname">unused_docs</tt><a class="headerlink" href="#confval-unused_docs" title="Permalink to this definition">¶</a></dt>
+<dd>A list of document names that are present, but not currently included in the
+toctree.  Use this setting to suppress the warning that is normally emitted
+in that case.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-exclude_trees">
+<tt class="descname">exclude_trees</tt><a class="headerlink" href="#confval-exclude_trees" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of directory paths, relative to the source directory, that are to be
+recursively excluded from the search for source files, that is, their
+subdirectories won&#8217;t be searched too.  The default is <tt class="docutils literal"><span class="pre">[]</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-exclude_dirnames">
+<tt class="descname">exclude_dirnames</tt><a class="headerlink" href="#confval-exclude_dirnames" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of directory names that are to be excluded from any recursive
+operation Sphinx performs (e.g. searching for source files or copying static
+files).  This is useful, for example, to exclude version-control-specific
+directories like <tt class="docutils literal"><span class="pre">'CVS'</span></tt>.  The default is <tt class="docutils literal"><span class="pre">[]</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-exclude_dirs">
+<tt class="descname">exclude_dirs</tt><a class="headerlink" href="#confval-exclude_dirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of directory names, relative to the source directory, that are to be
+excluded from the search for source files.</p>
+<p>
+<span class="versionmodified">Deprecated since version 0.5: </span>This does not take subdirs of the excluded directories into account.  Use
+<a class="reference internal" href="#confval-exclude_trees"><tt class="xref docutils literal"><span class="pre">exclude_trees</span></tt></a> or <a class="reference internal" href="#confval-exclude_dirnames"><tt class="xref docutils literal"><span class="pre">exclude_dirnames</span></tt></a>, which match the
+expectations.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-locale_dirs">
+<tt class="descname">locale_dirs</tt><a class="headerlink" href="#confval-locale_dirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<p>Directories in which to search for additional Sphinx message catalogs (see
+<a class="reference internal" href="#confval-language"><tt class="xref docutils literal"><span class="pre">language</span></tt></a>), relative to the source directory.  The directories on
+this path are searched by the standard <tt class="xref docutils literal"><span class="pre">gettext</span></tt> module for a domain of
+<tt class="docutils literal"><span class="pre">sphinx</span></tt>; so if you add the directory <tt class="docutils literal"><span class="pre">./locale</span></tt> to this settting,
+the message catalogs must be in
+<tt class="docutils literal"><span class="pre">./locale/</span><em><span class="pre">language</span></em><span class="pre">/LC_MESSAGES/sphinx.mo</span></tt>.</p>
+<p>The default is <tt class="docutils literal"><span class="pre">[]</span></tt>.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-templates_path">
+<tt class="descname">templates_path</tt><a class="headerlink" href="#confval-templates_path" title="Permalink to this definition">¶</a></dt>
+<dd>A list of paths that contain extra templates (or templates that overwrite
+builtin/theme-specific templates).  Relative paths are taken as relative to
+the configuration directory.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-template_bridge">
+<tt class="descname">template_bridge</tt><a class="headerlink" href="#confval-template_bridge" title="Permalink to this definition">¶</a></dt>
+<dd>A string with the fully-qualified name of a callable (or simply a class) that
+returns an instance of <a title="sphinx.application.TemplateBridge" class="reference external" href="ext/appapi.html#sphinx.application.TemplateBridge"><tt class="xref docutils literal"><span class="pre">TemplateBridge</span></tt></a>.  This
+instance is then used to render HTML documents, and possibly the output of
+other builders (currently the changes builder).  (Note that the template
+bridge must be made theme-aware if HTML themes are to be used.)</dd></dl>
+
+<dl class="confval">
+<dt id="confval-rst_epilog">
+<tt class="descname">rst_epilog</tt><a class="headerlink" href="#confval-rst_epilog" title="Permalink to this definition">¶</a></dt>
+<dd><p id="index-1">A string of reStructuredText that will be included at the end of every source
+file that is read.  This is the right place to add substitutions that should
+be available in every file.  An example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">rst_epilog</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">.. |psf| replace:: Python Software Foundation</span>
+<span class="s">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-default_role">
+<tt class="descname">default_role</tt><a class="headerlink" href="#confval-default_role" title="Permalink to this definition">¶</a></dt>
+<dd><p id="index-2">The name of a reST role (builtin or Sphinx extension) to use as the default
+role, that is, for text marked up <tt class="docutils literal"><span class="pre">`like</span> <span class="pre">this`</span></tt>.  This can be set to
+<tt class="docutils literal"><span class="pre">'obj'</span></tt> to make <tt class="docutils literal"><span class="pre">`filter`</span></tt> a cross-reference to the function &#8220;filter&#8221;.
+The default is <tt class="xref docutils literal"><span class="pre">None</span></tt>, which doesn&#8217;t reassign the default role.</p>
+<p>The default role can always be set within individual documents using the
+standard reST <tt class="xref docutils literal"><span class="pre">default-role</span></tt> directive.</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-keep_warnings">
+<tt class="descname">keep_warnings</tt><a class="headerlink" href="#confval-keep_warnings" title="Permalink to this definition">¶</a></dt>
+<dd><p>If true, keep warnings as &#8220;system message&#8221; paragraphs in the built documents.
+Regardless of this setting, warnings are always written to the standard error
+stream when <tt class="docutils literal"><span class="pre">sphinx-build</span></tt> is run.</p>
+<p>The default is <tt class="xref docutils literal"><span class="pre">False</span></tt>, the pre-0.5 behavior was to always keep them.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-modindex_common_prefix">
+<tt class="descname">modindex_common_prefix</tt><a class="headerlink" href="#confval-modindex_common_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of prefixes that are ignored for sorting the module index (e.g.,
+if this is set to <tt class="docutils literal"><span class="pre">['foo.']</span></tt>, then <tt class="docutils literal"><span class="pre">foo.bar</span></tt> is shown under <tt class="docutils literal"><span class="pre">B</span></tt>, not
+<tt class="docutils literal"><span class="pre">F</span></tt>). This can be handy if you document a project that consists of a single
+package.  Works only for the HTML builder currently.   Default is <tt class="docutils literal"><span class="pre">[]</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+</div>
+<div class="section" id="project-information">
+<h2>Project information<a class="headerlink" href="#project-information" title="Permalink to this headline">¶</a></h2>
+<dl class="confval">
+<dt id="confval-project">
+<tt class="descname">project</tt><a class="headerlink" href="#confval-project" title="Permalink to this definition">¶</a></dt>
+<dd>The documented project&#8217;s name.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-copyright">
+<tt class="descname">copyright</tt><a class="headerlink" href="#confval-copyright" title="Permalink to this definition">¶</a></dt>
+<dd>A copyright statement in the style <tt class="docutils literal"><span class="pre">'2008,</span> <span class="pre">Author</span> <span class="pre">Name'</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-version">
+<tt class="descname">version</tt><a class="headerlink" href="#confval-version" title="Permalink to this definition">¶</a></dt>
+<dd>The major project version, used as the replacement for <tt class="docutils literal"><span class="pre">|version|</span></tt>.  For
+example, for the Python documentation, this may be something like <tt class="docutils literal"><span class="pre">2.6</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-release">
+<tt class="descname">release</tt><a class="headerlink" href="#confval-release" title="Permalink to this definition">¶</a></dt>
+<dd><p>The full project version, used as the replacement for <tt class="docutils literal"><span class="pre">|release|</span></tt> and
+e.g. in the HTML templates.  For example, for the Python documentation, this
+may be something like <tt class="docutils literal"><span class="pre">2.6.0rc1</span></tt>.</p>
+<p>If you don&#8217;t need the separation provided between <a class="reference internal" href="#confval-version"><tt class="xref docutils literal"><span class="pre">version</span></tt></a> and
+<a class="reference internal" href="#confval-release"><tt class="xref docutils literal"><span class="pre">release</span></tt></a>, just set them both to the same value.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-language">
+<tt class="descname">language</tt><a class="headerlink" href="#confval-language" title="Permalink to this definition">¶</a></dt>
+<dd><p>The code for the language the docs are written in.  Any text automatically
+generated by Sphinx will be in that language.  Also, in the LaTeX builder, a
+suitable language will be selected as an option for the <em>Babel</em> package.
+Default is <tt class="xref docutils literal"><span class="pre">None</span></tt>, which means that no translation will be done.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<p>Currently supported languages are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">cs</span></tt> &#8211; Czech</li>
+<li><tt class="docutils literal"><span class="pre">de</span></tt> &#8211; German</li>
+<li><tt class="docutils literal"><span class="pre">en</span></tt> &#8211; English</li>
+<li><tt class="docutils literal"><span class="pre">es</span></tt> &#8211; Spanish</li>
+<li><tt class="docutils literal"><span class="pre">fi</span></tt> &#8211; Finnish</li>
+<li><tt class="docutils literal"><span class="pre">fr</span></tt> &#8211; French</li>
+<li><tt class="docutils literal"><span class="pre">it</span></tt> &#8211; Italian</li>
+<li><tt class="docutils literal"><span class="pre">nl</span></tt> &#8211; Dutch</li>
+<li><tt class="docutils literal"><span class="pre">pl</span></tt> &#8211; Polish</li>
+<li><tt class="docutils literal"><span class="pre">pt_BR</span></tt> &#8211; Brazilian Portuguese</li>
+<li><tt class="docutils literal"><span class="pre">ru</span></tt> &#8211; Russian</li>
+<li><tt class="docutils literal"><span class="pre">sl</span></tt> &#8211; Slovenian</li>
+<li><tt class="docutils literal"><span class="pre">uk_UA</span></tt> &#8211; Ukrainian</li>
+<li><tt class="docutils literal"><span class="pre">zh_TW</span></tt> &#8211; Traditional Chinese</li>
+</ul>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-today">
+<tt class="descname">today</tt><a class="headerlink" href="#confval-today" title="Permalink to this definition">¶</a></dt>
+<dt id="confval-today_fmt">
+<tt class="descname">today_fmt</tt><a class="headerlink" href="#confval-today_fmt" title="Permalink to this definition">¶</a></dt>
+<dd><p>These values determine how to format the current date, used as the
+replacement for <tt class="docutils literal"><span class="pre">|today|</span></tt>.</p>
+<ul class="simple">
+<li>If you set <a class="reference internal" href="#confval-today"><tt class="xref docutils literal"><span class="pre">today</span></tt></a> to a non-empty value, it is used.</li>
+<li>Otherwise, the current time is formatted using <tt class="xref docutils literal"><span class="pre">time.strftime()</span></tt> and
+the format given in <a class="reference internal" href="#confval-today_fmt"><tt class="xref docutils literal"><span class="pre">today_fmt</span></tt></a>.</li>
+</ul>
+<p>The default is no <a class="reference internal" href="#confval-today"><tt class="xref docutils literal"><span class="pre">today</span></tt></a> and a <a class="reference internal" href="#confval-today_fmt"><tt class="xref docutils literal"><span class="pre">today_fmt</span></tt></a> of <tt class="docutils literal"><span class="pre">'%B</span> <span class="pre">%d,</span>
+<span class="pre">%Y'</span></tt> (or, if translation is enabled with <a class="reference internal" href="#confval-language"><tt class="xref docutils literal"><span class="pre">language</span></tt></a>, am equivalent
+%format for the selected locale).</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-highlight_language">
+<tt class="descname">highlight_language</tt><a class="headerlink" href="#confval-highlight_language" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default language to highlight source code in.  The default is
+<tt class="docutils literal"><span class="pre">'python'</span></tt>.  The value should be a valid Pygments lexer name, see
+<a class="reference external" href="markup/code.html#code-examples"><em>Showing code examples</em></a> for more details.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-pygments_style">
+<tt class="descname">pygments_style</tt><a class="headerlink" href="#confval-pygments_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The style name to use for Pygments highlighting of source code.  Default is
+<tt class="docutils literal"><span class="pre">'sphinx'</span></tt>, which is a builtin style designed to match Sphinx&#8217; default
+style.</p>
+<p>
+<span class="versionmodified">Changed in version 0.3: </span>If the value is a fully-qualified name of a custom Pygments style class,
+this is then used as custom style.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-add_function_parentheses">
+<tt class="descname">add_function_parentheses</tt><a class="headerlink" href="#confval-add_function_parentheses" title="Permalink to this definition">¶</a></dt>
+<dd>A boolean that decides whether parentheses are appended to function and
+method role text (e.g. the content of <tt class="docutils literal"><span class="pre">:func:`input`</span></tt>) to signify that the
+name is callable.  Default is <tt class="xref docutils literal"><span class="pre">True</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-add_module_names">
+<tt class="descname">add_module_names</tt><a class="headerlink" href="#confval-add_module_names" title="Permalink to this definition">¶</a></dt>
+<dd>A boolean that decides whether module names are prepended to all
+<a class="reference external" href="glossary.html#term-description-unit"><em class="xref">description unit</em></a> titles, e.g. for <a class="reference external" href="markup/desc.html#dir-function"><tt class="xref docutils literal"><span class="pre">function</span></tt></a> directives.
+Default is <tt class="xref docutils literal"><span class="pre">True</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-show_authors">
+<tt class="descname">show_authors</tt><a class="headerlink" href="#confval-show_authors" title="Permalink to this definition">¶</a></dt>
+<dd>A boolean that decides whether <a class="reference external" href="markup/desc.html#dir-moduleauthor"><tt class="xref docutils literal"><span class="pre">moduleauthor</span></tt></a> and <a class="reference external" href="markup/misc.html#dir-sectionauthor"><tt class="xref docutils literal"><span class="pre">sectionauthor</span></tt></a>
+directives produce any output in the built files.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-trim_footnote_reference_space">
+<tt class="descname">trim_footnote_reference_space</tt><a class="headerlink" href="#confval-trim_footnote_reference_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trim spaces before footnote references that are necessary for the reST parser
+to recognize the footnote, but do not look too nice in the output.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+</div>
+<div class="section" id="options-for-html-output">
+<span id="html-options"></span><h2>Options for HTML output<a class="headerlink" href="#options-for-html-output" title="Permalink to this headline">¶</a></h2>
+<p>These options influence HTML as well as HTML Help output, and other builders
+that use Sphinx&#8217; HTMLWriter class.</p>
+<dl class="confval">
+<dt id="confval-html_theme">
+<tt class="descname">html_theme</tt><a class="headerlink" href="#confval-html_theme" title="Permalink to this definition">¶</a></dt>
+<dd><p>The &#8220;theme&#8221; that the HTML output should use.  See the <a class="reference external" href="theming.html"><em>section about
+theming</em></a>.  The default is <tt class="docutils literal"><span class="pre">'default'</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_theme_options">
+<tt class="descname">html_theme_options</tt><a class="headerlink" href="#confval-html_theme_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of options that influence the look and feel of the selected
+theme.  These are theme-specific.  For the options understood by the builtin
+themes, see <a class="reference external" href="theming.html#builtin-themes"><em>this section</em></a>.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_theme_path">
+<tt class="descname">html_theme_path</tt><a class="headerlink" href="#confval-html_theme_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of paths that contain custom themes, either as subdirectories or as
+zip files.  Relative paths are taken as relative to the configuration
+directory.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_style">
+<tt class="descname">html_style</tt><a class="headerlink" href="#confval-html_style" title="Permalink to this definition">¶</a></dt>
+<dd>The style sheet to use for HTML pages.  A file of that name must exist either
+in Sphinx&#8217; <tt class="docutils literal"><span class="pre">static/</span></tt> path, or in one of the custom paths given in
+<a class="reference internal" href="#confval-html_static_path"><tt class="xref docutils literal"><span class="pre">html_static_path</span></tt></a>.  Default is the stylesheet given by the selected
+theme.  If you only want to add or override a few things compared to the
+theme&#8217;s stylesheet, use CSS <tt class="docutils literal"><span class="pre">&#64;import</span></tt> to import the theme&#8217;s stylesheet.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_title">
+<tt class="descname">html_title</tt><a class="headerlink" href="#confval-html_title" title="Permalink to this definition">¶</a></dt>
+<dd>The &#8220;title&#8221; for HTML documentation generated with Sphinx&#8217; own templates.
+This is appended to the <tt class="docutils literal"><span class="pre">&lt;title&gt;</span></tt> tag of individual pages, and used in the
+navigation bar as the &#8220;topmost&#8221; element.  It defaults to <tt class="docutils literal"><span class="pre">'</span><em><span class="pre">&lt;project&gt;</span></em>
+<span class="pre">v</span><em><span class="pre">&lt;revision&gt;</span></em> <span class="pre">documentation'</span></tt>, where the placeholders are replaced by the
+config values of the same name.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_short_title">
+<tt class="descname">html_short_title</tt><a class="headerlink" href="#confval-html_short_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>A shorter &#8220;title&#8221; for the HTML docs.  This is used in for links in the header
+and in the HTML Help docs.  If not given, it defaults to the value of
+<a class="reference internal" href="#confval-html_title"><tt class="xref docutils literal"><span class="pre">html_title</span></tt></a>.</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_logo">
+<tt class="descname">html_logo</tt><a class="headerlink" href="#confval-html_logo" title="Permalink to this definition">¶</a></dt>
+<dd><p>If given, this must be the name of an image file that is the logo of the
+docs.  It is placed at the top of the sidebar; its width should therefore not
+exceed 200 pixels.  Default: <tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.4.1: </span>The image file will be copied to the <tt class="docutils literal"><span class="pre">_static</span></tt> directory of the output
+HTML, so an already existing file with that name will be overwritten.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_favicon">
+<tt class="descname">html_favicon</tt><a class="headerlink" href="#confval-html_favicon" title="Permalink to this definition">¶</a></dt>
+<dd><p>If given, this must be the name of an image file (within the static path, see
+below) that is the favicon of the docs.  Modern browsers use this as icon for
+tabs, windows and bookmarks.  It should be a Windows-style icon file
+(<tt class="docutils literal"><span class="pre">.ico</span></tt>), which is 16x16 or 32x32 pixels large.  Default: <tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_static_path">
+<tt class="descname">html_static_path</tt><a class="headerlink" href="#confval-html_static_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of paths that contain custom static files (such as style sheets or
+script files).  Relative paths are taken as relative to the configuration
+directory.  They are copied to the output directory after the theme&#8217;s static
+files, so a file named <tt class="docutils literal"><span class="pre">default.css</span></tt> will overwrite the theme&#8217;s
+<tt class="docutils literal"><span class="pre">default.css</span></tt>.</p>
+<p>
+<span class="versionmodified">Changed in version 0.4: </span>The paths in <a class="reference internal" href="#confval-html_static_path"><tt class="xref docutils literal"><span class="pre">html_static_path</span></tt></a> can now contain subdirectories.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_last_updated_fmt">
+<tt class="descname">html_last_updated_fmt</tt><a class="headerlink" href="#confval-html_last_updated_fmt" title="Permalink to this definition">¶</a></dt>
+<dd>If this is not the empty string, a &#8216;Last updated on:&#8217; timestamp is inserted
+at every page bottom, using the given <tt class="xref docutils literal"><span class="pre">strftime()</span></tt> format.  Default is
+<tt class="docutils literal"><span class="pre">'%b</span> <span class="pre">%d,</span> <span class="pre">%Y'</span></tt> (or a locale-dependent equivalent).</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_use_smartypants">
+<tt class="descname">html_use_smartypants</tt><a class="headerlink" href="#confval-html_use_smartypants" title="Permalink to this definition">¶</a></dt>
+<dd>If true, <em>SmartyPants</em> will be used to convert quotes and dashes to
+typographically correct entities.  Default: <tt class="xref docutils literal"><span class="pre">True</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_add_permalinks">
+<tt class="descname">html_add_permalinks</tt><a class="headerlink" href="#confval-html_add_permalinks" title="Permalink to this definition">¶</a></dt>
+<dd><p>If true, Sphinx will add &#8220;permalinks&#8221; for each heading and description
+environment as paragraph signs that become visible when the mouse hovers over
+them.  Default: <tt class="xref docutils literal"><span class="pre">True</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.6: </span>Previously, this was always activated.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_sidebars">
+<tt class="descname">html_sidebars</tt><a class="headerlink" href="#confval-html_sidebars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom sidebar templates, must be a dictionary that maps document names to
+template names.  Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_sidebars</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="s">&#39;using/windows&#39;</span><span class="p">:</span> <span class="s">&#39;windowssidebar.html&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This will render the template <tt class="docutils literal"><span class="pre">windowssidebar.html</span></tt> within the sidebar of
+the given document.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_additional_pages">
+<tt class="descname">html_additional_pages</tt><a class="headerlink" href="#confval-html_additional_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Additional templates that should be rendered to HTML pages, must be a
+dictionary that maps document names to template names.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_additional_pages</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;download&#39;</span><span class="p">:</span> <span class="s">&#39;customdownload.html&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This will render the template <tt class="docutils literal"><span class="pre">customdownload.html</span></tt> as the page
+<tt class="docutils literal"><span class="pre">download.html</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Earlier versions of Sphinx had a value called <tt class="xref docutils literal"><span class="pre">html_index</span></tt> which
+was a clumsy way of controlling the content of the &#8220;index&#8221; document.  If
+you used this feature, migrate it by adding an <tt class="docutils literal"><span class="pre">'index'</span></tt> key to this
+setting, with your custom template as the value, and in your custom
+template, use</p>
+<div class="last highlight-python"><pre>{% extend "defindex.html" %}
+{% block tables %}
+... old template content ...
+{% endblock %}</pre>
+</div>
+</div>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_use_modindex">
+<tt class="descname">html_use_modindex</tt><a class="headerlink" href="#confval-html_use_modindex" title="Permalink to this definition">¶</a></dt>
+<dd>If true, add a module index to the HTML documents.   Default is <tt class="xref docutils literal"><span class="pre">True</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_use_index">
+<tt class="descname">html_use_index</tt><a class="headerlink" href="#confval-html_use_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>If true, add an index to the HTML documents.  Default is <tt class="xref docutils literal"><span class="pre">True</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_split_index">
+<tt class="descname">html_split_index</tt><a class="headerlink" href="#confval-html_split_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>If true, the index is generated twice: once as a single page with all the
+entries, and once as one page per starting letter.  Default is <tt class="xref docutils literal"><span class="pre">False</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_copy_source">
+<tt class="descname">html_copy_source</tt><a class="headerlink" href="#confval-html_copy_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>If true, the reST sources are included in the HTML build as
+<tt class="docutils literal"><span class="pre">_sources/</span><em><span class="pre">name</span></em></tt>.  The default is <tt class="xref docutils literal"><span class="pre">True</span></tt>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If this config value is set to <tt class="xref docutils literal"><span class="pre">False</span></tt>, the JavaScript search function
+will only display the titles of matching documents, and no excerpt from
+the matching contents.</p>
+</div>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_show_sourcelink">
+<tt class="descname">html_show_sourcelink</tt><a class="headerlink" href="#confval-html_show_sourcelink" title="Permalink to this definition">¶</a></dt>
+<dd><p>If true (and <a class="reference internal" href="#confval-html_copy_source"><tt class="xref docutils literal"><span class="pre">html_copy_source</span></tt></a> is true as well), links to the
+reST sources will be added to the sidebar.  The default is <tt class="xref docutils literal"><span class="pre">True</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_use_opensearch">
+<tt class="descname">html_use_opensearch</tt><a class="headerlink" href="#confval-html_use_opensearch" title="Permalink to this definition">¶</a></dt>
+<dd>If nonempty, an <cite>OpenSearch &lt;http://opensearch.org&gt;</cite> description file will be
+output, and all pages will contain a <tt class="docutils literal"><span class="pre">&lt;link&gt;</span></tt> tag referring to it.  Since
+OpenSearch doesn&#8217;t support relative URLs for its search page location, the
+value of this option must be the base URL from which these documents are
+served (without trailing slash), e.g. <tt class="docutils literal"><span class="pre">&quot;http://docs.python.org&quot;</span></tt>.  The
+default is <tt class="docutils literal"><span class="pre">''</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_file_suffix">
+<tt class="descname">html_file_suffix</tt><a class="headerlink" href="#confval-html_file_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>If nonempty, this is the file name suffix for generated HTML files.  The
+default is <tt class="docutils literal"><span class="pre">&quot;.html&quot;</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_link_suffix">
+<tt class="descname">html_link_suffix</tt><a class="headerlink" href="#confval-html_link_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Suffix for generated links to HTML files.  The default is whatever
+<a class="reference internal" href="#confval-html_file_suffix"><tt class="xref docutils literal"><span class="pre">html_file_suffix</span></tt></a> is set to; it can be set differently (e.g. to
+support different web server setups).</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_translator_class">
+<tt class="descname">html_translator_class</tt><a class="headerlink" href="#confval-html_translator_class" title="Permalink to this definition">¶</a></dt>
+<dd>A string with the fully-qualified name of a HTML Translator class, that is, a
+subclass of Sphinx&#8217; <tt class="xref docutils literal"><span class="pre">HTMLTranslator</span></tt>, that is used
+to translate document trees to HTML.  Default is <tt class="xref docutils literal"><span class="pre">None</span></tt> (use the builtin
+translator).</dd></dl>
+
+<dl class="confval">
+<dt id="confval-html_show_sphinx">
+<tt class="descname">html_show_sphinx</tt><a class="headerlink" href="#confval-html_show_sphinx" title="Permalink to this definition">¶</a></dt>
+<dd><p>If true, &#8220;Created using Sphinx&#8221; is shown in the HTML footer.  Default is
+<tt class="xref docutils literal"><span class="pre">True</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-htmlhelp_basename">
+<tt class="descname">htmlhelp_basename</tt><a class="headerlink" href="#confval-htmlhelp_basename" title="Permalink to this definition">¶</a></dt>
+<dd>Output file base name for HTML help builder.  Default is <tt class="docutils literal"><span class="pre">'pydoc'</span></tt>.</dd></dl>
+
+</div>
+<div class="section" id="options-for-latex-output">
+<span id="latex-options"></span><h2>Options for LaTeX output<a class="headerlink" href="#options-for-latex-output" title="Permalink to this headline">¶</a></h2>
+<p>These options influence LaTeX output.</p>
+<dl class="confval">
+<dt id="confval-latex_documents">
+<tt class="descname">latex_documents</tt><a class="headerlink" href="#confval-latex_documents" title="Permalink to this definition">¶</a></dt>
+<dd><p>This value determines how to group the document tree into LaTeX source files.
+It must be a list of tuples <tt class="docutils literal"><span class="pre">(startdocname,</span> <span class="pre">targetname,</span> <span class="pre">title,</span> <span class="pre">author,</span>
+<span class="pre">documentclass,</span> <span class="pre">toctree_only)</span></tt>, where the items are:</p>
+<ul class="simple">
+<li><em>startdocname</em>: document name that is the &#8220;root&#8221; of the LaTeX file.  All
+documents referenced by it in TOC trees will be included in the LaTeX file
+too.  (If you want only one LaTeX file, use your <a class="reference internal" href="#confval-master_doc"><tt class="xref docutils literal"><span class="pre">master_doc</span></tt></a>
+here.)</li>
+<li><em>targetname</em>: file name of the LaTeX file in the output directory.</li>
+<li><em>title</em>: LaTeX document title.  Can be empty to use the title of the
+<em>startdoc</em>.  This is inserted as LaTeX markup, so special characters like a
+backslash or ampersand must be represented by the proper LaTeX commands if
+they are to be inserted literally.</li>
+<li><em>author</em>: Author for the LaTeX document.  The same LaTeX markup caveat as
+for <em>title</em> applies.  Use <tt class="docutils literal"><span class="pre">\and</span></tt> to separate multiple authors, as in:
+<tt class="docutils literal"><span class="pre">'John</span> <span class="pre">\and</span> <span class="pre">Sarah'</span></tt>.</li>
+<li><em>documentclass</em>: Must be one of <tt class="docutils literal"><span class="pre">'manual'</span></tt> or <tt class="docutils literal"><span class="pre">'howto'</span></tt>.  Only &#8220;manual&#8221;
+documents will get appendices.  Also, howtos will have a simpler title
+page.</li>
+<li><em>toctree_only</em>: Must be <tt class="xref docutils literal"><span class="pre">True</span></tt> or <tt class="xref docutils literal"><span class="pre">False</span></tt>.  If <tt class="xref docutils literal"><span class="pre">True</span></tt>, the <em>startdoc</em>
+document itself is not included in the output, only the documents
+referenced by it via TOC trees.  With this option, you can put extra stuff
+in the master document that shows up in the HTML, but not the LaTeX output.</li>
+</ul>
+<p>
+<span class="versionmodified">New in version 0.3: </span>The 6th item <tt class="docutils literal"><span class="pre">toctree_only</span></tt>.  Tuples with 5 items are still accepted.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-latex_logo">
+<tt class="descname">latex_logo</tt><a class="headerlink" href="#confval-latex_logo" title="Permalink to this definition">¶</a></dt>
+<dd>If given, this must be the name of an image file (relative to the
+configuration directory) that is the logo of the docs.  It is placed at the
+top of the title page.  Default: <tt class="xref docutils literal"><span class="pre">None</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-latex_use_parts">
+<tt class="descname">latex_use_parts</tt><a class="headerlink" href="#confval-latex_use_parts" title="Permalink to this definition">¶</a></dt>
+<dd><p>If true, the topmost sectioning unit is parts, else it is chapters.  Default:
+<tt class="xref docutils literal"><span class="pre">False</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.3.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-latex_appendices">
+<tt class="descname">latex_appendices</tt><a class="headerlink" href="#confval-latex_appendices" title="Permalink to this definition">¶</a></dt>
+<dd>A list of document names to append as an appendix to all manuals.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-latex_use_modindex">
+<tt class="descname">latex_use_modindex</tt><a class="headerlink" href="#confval-latex_use_modindex" title="Permalink to this definition">¶</a></dt>
+<dd>If true, add a module index to LaTeX documents.   Default is <tt class="xref docutils literal"><span class="pre">True</span></tt>.</dd></dl>
+
+<dl class="confval">
+<dt id="confval-latex_elements">
+<tt class="descname">latex_elements</tt><a class="headerlink" href="#confval-latex_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<p>A dictionary that contains LaTeX snippets that override those Sphinx usually
+puts into the generated <tt class="docutils literal"><span class="pre">.tex</span></tt> files.</p>
+<p>Keep in mind that backslashes must be doubled in Python string literals to
+avoid interpretation as escape sequences.</p>
+<ul>
+<li><p class="first">Keys that you may want to override include:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">'papersize'</span></tt></dt>
+<dd><p class="first last">Paper size option of the document class (<tt class="docutils literal"><span class="pre">'a4paper'</span></tt> or
+<tt class="docutils literal"><span class="pre">'letterpaper'</span></tt>), default <tt class="docutils literal"><span class="pre">'letterpaper'</span></tt>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'pointsize'</span></tt></dt>
+<dd><p class="first last">Point size option of the document class (<tt class="docutils literal"><span class="pre">'10pt'</span></tt>, <tt class="docutils literal"><span class="pre">'11pt'</span></tt> or
+<tt class="docutils literal"><span class="pre">'12pt'</span></tt>), default <tt class="docutils literal"><span class="pre">'10pt'</span></tt>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'babel'</span></tt></dt>
+<dd><p class="first last">&#8220;babel&#8221; package inclusion, default <tt class="docutils literal"><span class="pre">'\\usepackage{babel}'</span></tt>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'fontpkg'</span></tt></dt>
+<dd><p class="first last">Font package inclusion, default <tt class="docutils literal"><span class="pre">'\\usepackage{times}'</span></tt> (which uses
+Times and Helvetica).  You can set this to <tt class="docutils literal"><span class="pre">''</span></tt> to use the Computer
+Modern fonts.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'fncychap'</span></tt></dt>
+<dd><p class="first last">Inclusion of the &#8220;fncychap&#8221; package (which makes fancy chapter titles),
+default <tt class="docutils literal"><span class="pre">'\\usepackage[Bjarne]{fncychap}'</span></tt> for English documentation,
+<tt class="docutils literal"><span class="pre">'\\usepackage[Sonny]{fncychap}'</span></tt> for internationalized docs (because
+the &#8220;Bjarne&#8221; style uses numbers spelled out in English).  Other
+&#8220;fncychap&#8221; styles you can try include &#8220;Lenny&#8221;, &#8220;Glenn&#8221;, &#8220;Conny&#8221; and
+&#8220;Rejne&#8221;.  You can also set this to <tt class="docutils literal"><span class="pre">''</span></tt> to disable fncychap.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'preamble'</span></tt></dt>
+<dd><p class="first last">Additional preamble content, default empty.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'footer'`</span></tt></dt>
+<dd><p class="first last">Additional footer content (before the indices), default empty.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Keys that don&#8217;t need be overridden unless in special cases are:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">'inputenc'</span></tt></dt>
+<dd><p class="first last">&#8220;inputenc&#8221; package inclusion, default
+<tt class="docutils literal"><span class="pre">'\\usepackage[utf8]{inputenc}'</span></tt>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'fontenc'</span></tt></dt>
+<dd><p class="first last">&#8220;fontenc&#8221; package inclusion, default <tt class="docutils literal"><span class="pre">'\\usepackage[T1]{fontenc}'</span></tt>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'maketitle'</span></tt></dt>
+<dd><p class="first last">&#8220;maketitle&#8221; call, default <tt class="docutils literal"><span class="pre">'\\maketitle'</span></tt>.  Override if you want to
+generate a differently-styled title page.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'tableofcontents'</span></tt></dt>
+<dd><p class="first last">&#8220;tableofcontents&#8221; call, default <tt class="docutils literal"><span class="pre">'\\tableofcontents'</span></tt>.  Override if
+you want to generate a different table of contents or put content
+between the title page and the TOC.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'printindex'</span></tt></dt>
+<dd><p class="first last">&#8220;printindex&#8221; call, the last thing in the file, default
+<tt class="docutils literal"><span class="pre">'\\printindex'</span></tt>.  Override if you want to generate the index
+differently or append some content after the index.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Keys that are set by other options and therefore should not be overridden are:</p>
+<p><tt class="docutils literal"><span class="pre">'docclass'</span></tt>
+<tt class="docutils literal"><span class="pre">'classoptions'</span></tt>
+<tt class="docutils literal"><span class="pre">'title'</span></tt>
+<tt class="docutils literal"><span class="pre">'date'</span></tt>
+<tt class="docutils literal"><span class="pre">'release'</span></tt>
+<tt class="docutils literal"><span class="pre">'author'</span></tt>
+<tt class="docutils literal"><span class="pre">'logo'</span></tt>
+<tt class="docutils literal"><span class="pre">'releasename'</span></tt>
+<tt class="docutils literal"><span class="pre">'makeindex'</span></tt>
+<tt class="docutils literal"><span class="pre">'makemodindex'</span></tt>
+<tt class="docutils literal"><span class="pre">'shorthandoff'</span></tt>
+<tt class="docutils literal"><span class="pre">'printmodindex'</span></tt></p>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-latex_additional_files">
+<tt class="descname">latex_additional_files</tt><a class="headerlink" href="#confval-latex_additional_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of file names, relative to the configuration directory, to copy to the
+build directory when building LaTeX output.  This is useful to copy files
+that Sphinx doesn&#8217;t copy automatically, e.g. if they are referenced in custom
+LaTeX added in <tt class="docutils literal"><span class="pre">latex_elements</span></tt>.  Image files that are referenced in source
+files (e.g. via <tt class="docutils literal"><span class="pre">..</span> <span class="pre">image::</span></tt>) are copied automatically.</p>
+<p>You have to make sure yourself that the filenames don&#8217;t collide with those of
+any automatically copied files.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-latex_preamble">
+<tt class="descname">latex_preamble</tt><a class="headerlink" href="#confval-latex_preamble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Additional LaTeX markup for the preamble.</p>
+<p>
+<span class="versionmodified">Deprecated since version 0.5: </span>Use the <tt class="docutils literal"><span class="pre">'preamble'</span></tt> key in the <a class="reference internal" href="#confval-latex_elements"><tt class="xref docutils literal"><span class="pre">latex_elements</span></tt></a> value.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-latex_paper_size">
+<tt class="descname">latex_paper_size</tt><a class="headerlink" href="#confval-latex_paper_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The output paper size (<tt class="docutils literal"><span class="pre">'letter'</span></tt> or <tt class="docutils literal"><span class="pre">'a4'</span></tt>).  Default is <tt class="docutils literal"><span class="pre">'letter'</span></tt>.</p>
+<p>
+<span class="versionmodified">Deprecated since version 0.5: </span>Use the <tt class="docutils literal"><span class="pre">'papersize'</span></tt> key in the <a class="reference internal" href="#confval-latex_elements"><tt class="xref docutils literal"><span class="pre">latex_elements</span></tt></a> value.</p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-latex_font_size">
+<tt class="descname">latex_font_size</tt><a class="headerlink" href="#confval-latex_font_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font size (&#8216;10pt&#8217;, &#8216;11pt&#8217; or &#8216;12pt&#8217;). Default is <tt class="docutils literal"><span class="pre">'10pt'</span></tt>.</p>
+<p>
+<span class="versionmodified">Deprecated since version 0.5: </span>Use the <tt class="docutils literal"><span class="pre">'pointsize'</span></tt> key in the <a class="reference internal" href="#confval-latex_elements"><tt class="xref docutils literal"><span class="pre">latex_elements</span></tt></a> value.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="theming.html" title="HTML theming support"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="builders.html" title="Available builders"
+             >previous</a> |</li>
+        <li><a href="index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">Documentation</a>&raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2007-2009, Georg Brandl.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

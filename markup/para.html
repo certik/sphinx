@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Paragraph-level markup &mdash; Sphinx v0.6.2 documentation</title>
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Sphinx v0.6.2 documentation"
+          href="../static/opensearch.xml"/>
+    <link rel="top" title="Sphinx v0.6.2 documentation" href="../index.html" />
+    <link rel="up" title="Sphinx Markup Constructs" href="index.html" />
+    <link rel="next" title="Showing code examples" href="code.html" />
+    <link rel="prev" title="Module-specific markup" href="desc.html" /> 
+  </head>
+  <body>
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<img src="../static/sphinx.png" alt="Sphinx logo" />
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="code.html" title="Showing code examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="desc.html" title="Module-specific markup"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a>&raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Sphinx Markup Constructs</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../contents.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Paragraph-level markup</a></li>
+<li><a class="reference external" href="#table-of-contents-markup">Table-of-contents markup</a></li>
+<li><a class="reference external" href="#index-generating-markup">Index-generating markup</a></li>
+<li><a class="reference external" href="#glossary">Glossary</a></li>
+<li><a class="reference external" href="#grammar-production-displays">Grammar production displays</a></li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="desc.html"
+                                  title="previous chapter">Module-specific markup</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="code.html"
+                                  title="next chapter">Showing code examples</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../sources/markup/para.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <p>x.. highlight:: rest</p>
+<div class="section" id="paragraph-level-markup">
+<h1>Paragraph-level markup<a class="headerlink" href="#paragraph-level-markup" title="Permalink to this headline">¶</a></h1>
+<p id="index-11">These directives create short paragraphs and can be used inside information
+units as well as normal text:</p>
+<dl class="directive">
+<dt id="dir-note">
+<tt class="descname">.. note::</tt><a class="headerlink" href="#dir-note" title="Permalink to this definition">¶</a></dt>
+<dd><p>An especially important bit of information about an API that a user should be
+aware of when using whatever bit of API the note pertains to.  The content of
+the directive should be written in complete sentences and include all
+appropriate punctuation.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>.. note::
+
+   This function is not suitable for sending spam e-mails.</pre>
+</div>
+</dd></dl>
+
+<dl class="directive">
+<dt id="dir-warning">
+<tt class="descname">.. warning::</tt><a class="headerlink" href="#dir-warning" title="Permalink to this definition">¶</a></dt>
+<dd>An important bit of information about an API that a user should be very aware
+of when using whatever bit of API the warning pertains to.  The content of
+the directive should be written in complete sentences and include all
+appropriate punctuation. This differs from <tt class="docutils literal"><span class="pre">note</span></tt> in that it is recommended
+over <tt class="docutils literal"><span class="pre">note</span></tt> for information regarding security.</dd></dl>
+
+<dl class="directive">
+<dt id="dir-versionadded">
+<tt class="descname">.. versionadded::</tt><tt class="descclassname"> version</tt><a class="headerlink" href="#dir-versionadded" title="Permalink to this definition">¶</a></dt>
+<dd><p>This directive documents the version of the project which added the described
+feature to the library or C API. When this applies to an entire module, it
+should be placed at the top of the module section before any prose.</p>
+<p>The first argument must be given and is the version in question; you can add
+a second argument consisting of a <em>brief</em> explanation of the change.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>.. versionadded:: 2.5
+   The `spam` parameter.</pre>
+</div>
+<p>Note that there must be no blank line between the directive head and the
+explanation; this is to make these blocks visually continuous in the markup.</p>
+</dd></dl>
+
+<dl class="directive">
+<dt id="dir-versionchanged">
+<tt class="descname">.. versionchanged::</tt><tt class="descclassname"> version</tt><a class="headerlink" href="#dir-versionchanged" title="Permalink to this definition">¶</a></dt>
+<dd>Similar to <tt class="docutils literal"><span class="pre">versionadded</span></tt>, but describes when and what changed in the named
+feature in some way (new parameters, changed side effects, etc.).</dd></dl>
+
+<hr class="docutils" />
+<dl class="directive">
+<dt id="dir-seealso">
+<tt class="descname">.. seealso::</tt><a class="headerlink" href="#dir-seealso" title="Permalink to this definition">¶</a></dt>
+<dd><p>Many sections include a list of references to module documentation or
+external documents.  These lists are created using the <tt class="docutils literal"><span class="pre">seealso</span></tt> directive.</p>
+<p>The <tt class="docutils literal"><span class="pre">seealso</span></tt> directive is typically placed in a section just before any
+sub-sections.  For the HTML output, it is shown boxed off from the main flow
+of the text.</p>
+<p>The content of the <tt class="docutils literal"><span class="pre">seealso</span></tt> directive should be a reST definition list.
+Example:</p>
+<div class="highlight-python"><pre>.. seealso::
+
+   Module :mod:`zipfile`
+      Documentation of the :mod:`zipfile` standard module.
+
+   `GNU tar manual, Basic Tar Format &lt;http://link&gt;`_
+      Documentation for tar archive files, including GNU tar extensions.</pre>
+</div>
+<p>There&#8217;s also a &#8220;short form&#8221; allowed that looks like this:</p>
+<div class="highlight-python"><pre>.. seealso:: modules :mod:`zipfile`, :mod:`tarfile`</pre>
+</div>
+<p>
+<span class="versionmodified">New in version 0.5: </span>The short form.</p>
+</dd></dl>
+
+<dl class="directive">
+<dt id="dir-rubric">
+<tt class="descname">.. rubric::</tt><tt class="descclassname"> title</tt><a class="headerlink" href="#dir-rubric" title="Permalink to this definition">¶</a></dt>
+<dd><p>This directive creates a paragraph heading that is not used to create a
+table of contents node.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the <em>title</em> of the rubric is &#8220;Footnotes&#8221;, this rubric is ignored by
+the LaTeX writer, since it is assumed to only contain footnote
+definitions and therefore would create an empty heading.</p>
+</div>
+</dd></dl>
+
+<dl class="directive">
+<dt id="dir-centered">
+<tt class="descname">.. centered::</tt><a class="headerlink" href="#dir-centered" title="Permalink to this definition">¶</a></dt>
+<dd><p>This directive creates a centered boldfaced line of text.  Use it as follows:</p>
+<div class="highlight-python"><pre>.. centered:: LICENSE AGREEMENT</pre>
+</div>
+</dd></dl>
+
+<dl class="directive">
+<dt id="dir-hlist">
+<tt class="descname">.. hlist::</tt><a class="headerlink" href="#dir-hlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>This directive must contain a bullet list.  It will transform it into a more
+compact list by either distributing more than one item horizontally, or
+reducing spacing between items, depending on the builder.</p>
+<p>For builders that support the horizontal distribution, there is a <tt class="docutils literal"><span class="pre">columns</span></tt>
+option that specifies the number of columns; it defaults to 2.  Example:</p>
+<div class="highlight-python"><pre>.. hlist::
+   :columns: 3
+
+   * A list of
+   * short items
+   * that should be
+   * displayed
+   * horizontally</pre>
+</div>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+</div>
+<div class="section" id="table-of-contents-markup">
+<h1>Table-of-contents markup<a class="headerlink" href="#table-of-contents-markup" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference external" href="../concepts.html#dir-toctree"><tt class="xref docutils literal"><span class="pre">toctree</span></tt></a> directive, which generates tables of contents of
+subdocuments, is described in &#8220;Sphinx concepts&#8221;.</p>
+<p>For local tables of contents, use the standard reST <tt class="xref docutils literal"><span class="pre">contents</span></tt> directive.</p>
+</div>
+<div class="section" id="index-generating-markup">
+<h1>Index-generating markup<a class="headerlink" href="#index-generating-markup" title="Permalink to this headline">¶</a></h1>
+<p>Sphinx automatically creates index entries from all information units (like
+functions, classes or attributes) like discussed before.</p>
+<p>However, there is also an explicit directive available, to make the index more
+comprehensive and enable index entries in documents where information is not
+mainly contained in information units, such as the language reference.</p>
+<dl class="directive">
+<dt id="dir-index">
+<tt class="descname">.. index::</tt><tt class="descclassname"> &lt;entries&gt;</tt><a class="headerlink" href="#dir-index" title="Permalink to this definition">¶</a></dt>
+<dd><p>This directive contains one or more index entries.  Each entry consists of a
+type and a value, separated by a colon.</p>
+<p>For example:</p>
+<div class="highlight-python"><pre>.. index::
+   single: execution; context
+   module: __main__
+   module: sys
+   triple: module; search; path
+
+The execution context
+---------------------
+
+...</pre>
+</div>
+<p>This directive contains five entries, which will be converted to entries in the
+generated index which link to the exact location of the index statement (or, in
+case of offline media, the corresponding page number).</p>
+<p>Since index directives generate cross-reference targets at their location in
+the source, it makes sense to put them <em>before</em> the thing they refer to &#8211;
+e.g. a heading, as in the example above.</p>
+<p>The possible entry types are:</p>
+<dl class="docutils">
+<dt>single</dt>
+<dd>Creates a single index entry.  Can be made a subentry by separating the
+subentry text with a semicolon (this notation is also used below to describe
+what entries are created).</dd>
+<dt>pair</dt>
+<dd><tt class="docutils literal"><span class="pre">pair:</span> <span class="pre">loop;</span> <span class="pre">statement</span></tt> is a shortcut that creates two index entries,
+namely <tt class="docutils literal"><span class="pre">loop;</span> <span class="pre">statement</span></tt> and <tt class="docutils literal"><span class="pre">statement;</span> <span class="pre">loop</span></tt>.</dd>
+<dt>triple</dt>
+<dd>Likewise, <tt class="docutils literal"><span class="pre">triple:</span> <span class="pre">module;</span> <span class="pre">search;</span> <span class="pre">path</span></tt> is a shortcut that creates three
+index entries, which are <tt class="docutils literal"><span class="pre">module;</span> <span class="pre">search</span> <span class="pre">path</span></tt>, <tt class="docutils literal"><span class="pre">search;</span> <span class="pre">path,</span> <span class="pre">module</span></tt> and
+<tt class="docutils literal"><span class="pre">path;</span> <span class="pre">module</span> <span class="pre">search</span></tt>.</dd>
+<dt>module, keyword, operator, object, exception, statement, builtin</dt>
+<dd>These all create two index entries.  For example, <tt class="docutils literal"><span class="pre">module:</span> <span class="pre">hashlib</span></tt> creates
+the entries <tt class="docutils literal"><span class="pre">module;</span> <span class="pre">hashlib</span></tt> and <tt class="docutils literal"><span class="pre">hashlib;</span> <span class="pre">module</span></tt>.</dd>
+</dl>
+<p>For index directives containing only &#8220;single&#8221; entries, there is a shorthand
+notation:</p>
+<div class="highlight-python"><pre>.. index:: BNF, grammar, syntax, notation</pre>
+</div>
+<p>This creates four index entries.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<dl class="directive">
+<dt id="dir-glossary">
+<tt class="descname">.. glossary::</tt><a class="headerlink" href="#dir-glossary" title="Permalink to this definition">¶</a></dt>
+<dd><p>This directive must contain a reST definition list with terms and
+definitions.  The definitions will then be referencable with the <a class="reference external" href="inline.html#role-term"><tt class="xref docutils literal"><span class="pre">term</span></tt></a>
+role.  Example:</p>
+<div class="highlight-python"><pre>.. glossary::
+
+   environment
+      A structure where information about all documents under the root is
+      saved, and used for cross-referencing.  The environment is pickled
+      after the parsing stage, so that successive runs only need to read
+      and parse new and changed documents.
+
+   source directory
+      The directory which, including its subdirectories, contains all
+      source files for one Sphinx project.</pre>
+</div>
+<p>
+<span class="versionmodified">New in version 0.6: </span>You can now give the glossary directive a <tt class="docutils literal"><span class="pre">:sorted:</span></tt> flag that will
+automatically sort the entries alphabetically.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="grammar-production-displays">
+<h1>Grammar production displays<a class="headerlink" href="#grammar-production-displays" title="Permalink to this headline">¶</a></h1>
+<p>Special markup is available for displaying the productions of a formal grammar.
+The markup is simple and does not attempt to model all aspects of BNF (or any
+derived forms), but provides enough to allow context-free grammars to be
+displayed in a way that causes uses of a symbol to be rendered as hyperlinks to
+the definition of the symbol.  There is this directive:</p>
+<dl class="directive">
+<dt id="dir-productionlist">
+<tt class="descname">.. productionlist::</tt><a class="headerlink" href="#dir-productionlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>This directive is used to enclose a group of productions.  Each production is
+given on a single line and consists of a name, separated by a colon from the
+following definition.  If the definition spans multiple lines, each
+continuation line must begin with a colon placed at the same column as in the
+first line.</p>
+<p>Blank lines are not allowed within <tt class="docutils literal"><span class="pre">productionlist</span></tt> directive arguments.</p>
+<p>The definition can contain token names which are marked as interpreted text
+(e.g. <tt class="docutils literal"><span class="pre">sum</span> <span class="pre">::=</span> <span class="pre">`integer`</span> <span class="pre">&quot;+&quot;</span> <span class="pre">`integer`</span></tt>) &#8211; this generates cross-references
+to the productions of these tokens.</p>
+<p>Note that no further reST parsing is done in the production, so that you
+don&#8217;t have to escape <tt class="docutils literal"><span class="pre">*</span></tt> or <tt class="docutils literal"><span class="pre">|</span></tt> characters.</p>
+</dd></dl>
+
+<p>The following is an example taken from the Python Reference Manual:</p>
+<div class="highlight-python"><pre>.. productionlist::
+   try_stmt: try1_stmt | try2_stmt
+   try1_stmt: "try" ":" `suite`
+            : ("except" [`expression` ["," `target`]] ":" `suite`)+
+            : ["else" ":" `suite`]
+            : ["finally" ":" `suite`]
+   try2_stmt: "try" ":" `suite`
+            : "finally" ":" `suite`</pre>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="code.html" title="Showing code examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="desc.html" title="Module-specific markup"
+             >previous</a> |</li>
+        <li><a href="../index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a>&raquo;</li>
+
+          <li><a href="index.html" >Sphinx Markup Constructs</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2007-2009, Georg Brandl.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

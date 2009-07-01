@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Miscellaneous markup &mdash; Sphinx v0.6.2 documentation</title>
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Sphinx v0.6.2 documentation"
+          href="../static/opensearch.xml"/>
+    <link rel="top" title="Sphinx v0.6.2 documentation" href="../index.html" />
+    <link rel="up" title="Sphinx Markup Constructs" href="index.html" />
+    <link rel="next" title="Available builders" href="../builders.html" />
+    <link rel="prev" title="Inline markup" href="inline.html" /> 
+  </head>
+  <body>
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<img src="../static/sphinx.png" alt="Sphinx logo" />
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../builders.html" title="Available builders"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="inline.html" title="Inline markup"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a>&raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Sphinx Markup Constructs</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../contents.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Miscellaneous markup</a><ul>
+<li><a class="reference external" href="#file-wide-metadata">File-wide metadata</a></li>
+<li><a class="reference external" href="#meta-information-markup">Meta-information markup</a></li>
+<li><a class="reference external" href="#including-content-based-on-tags">Including content based on tags</a></li>
+<li><a class="reference external" href="#tables">Tables</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="inline.html"
+                                  title="previous chapter">Inline markup</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../builders.html"
+                                  title="next chapter">Available builders</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../sources/markup/misc.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="miscellaneous-markup">
+<h1>Miscellaneous markup<a class="headerlink" href="#miscellaneous-markup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="file-wide-metadata">
+<span id="metadata"></span><h2>File-wide metadata<a class="headerlink" href="#file-wide-metadata" title="Permalink to this headline">¶</a></h2>
+<p>reST has the concept of &#8220;field lists&#8221;; these are a sequence of fields marked up
+like this:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="nc">:Field name:</span> <span class="nf">Field content</span>
+</pre></div>
+</div>
+<p>A field list at the very top of a file is parsed as the &#8220;docinfo&#8221;, which in
+normal documents can be used to record the author, date of publication and
+other metadata.  In Sphinx, the docinfo is used as metadata, too, but not
+displayed in the output.</p>
+<p>At the moment, these metadata fields are recognized:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">tocdepth</span></tt></dt>
+<dd><p class="first">The maximum depth for a table of contents of this file.</p>
+<p class="last">
+<span class="versionmodified">New in version 0.4.</span></p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">nocomments</span></tt></dt>
+<dd>If set, the web application won&#8217;t display a comment form for a page generated
+from this source file.</dd>
+</dl>
+</div>
+<div class="section" id="meta-information-markup">
+<h2>Meta-information markup<a class="headerlink" href="#meta-information-markup" title="Permalink to this headline">¶</a></h2>
+<dl class="directive">
+<dt id="dir-sectionauthor">
+<tt class="descname">.. sectionauthor::</tt><a class="headerlink" href="#dir-sectionauthor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifies the author of the current section.  The argument should include
+the author&#8217;s name such that it can be used for presentation and email
+address.  The domain name portion of the address should be lower case.
+Example:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">sectionauthor</span><span class="p">::</span> <span class="k">Guido van Rossum &lt;guido@python.org&gt;</span>
+</pre></div>
+</div>
+<p>By default, this markup isn&#8217;t reflected in the output in any way (it helps
+keep track of contributions), but you can set the configuration value
+<a class="reference external" href="../config.html#confval-show_authors"><tt class="xref docutils literal"><span class="pre">show_authors</span></tt></a> to True to make them produce a paragraph in the
+output.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="including-content-based-on-tags">
+<span id="tags"></span><h2>Including content based on tags<a class="headerlink" href="#including-content-based-on-tags" title="Permalink to this headline">¶</a></h2>
+<dl class="directive">
+<dt id="dir-only">
+<tt class="descname">.. only::</tt><tt class="descclassname"> &lt;expression&gt;</tt><a class="headerlink" href="#dir-only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Include the content of the directive only if the <em>expression</em> is true.  The
+expression should consist of tags, like this:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">only</span><span class="p">::</span> <span class="k">html and draft</span>
+</pre></div>
+</div>
+<p>Undefined tags are false, defined tags (via the <tt class="docutils literal"><span class="pre">-t</span></tt> command-line option or
+within <tt class="docutils literal"><span class="pre">conf.py</span></tt>) are true.  Boolean expressions, also using
+parentheses (like <tt class="docutils literal"><span class="pre">html</span> <span class="pre">and</span> <span class="pre">(latex</span> <span class="pre">or</span> <span class="pre">draft)</span></tt> are supported.</p>
+<p>The format of the current builder (<tt class="docutils literal"><span class="pre">html</span></tt>, <tt class="docutils literal"><span class="pre">latex</span></tt> or <tt class="docutils literal"><span class="pre">text</span></tt>) is always
+set as a tag.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+</div>
+<div class="section" id="tables">
+<h2>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h2>
+<p>Use standard reStructuredText tables.  They work fine in HTML output, however
+there are some gotchas when using tables in LaTeX: the column width is hard to
+determine correctly automatically.  For this reason, the following directive
+exists:</p>
+<dl class="directive">
+<dt id="dir-tabularcolumns">
+<tt class="descname">.. tabularcolumns::</tt><tt class="descclassname"> column spec</tt><a class="headerlink" href="#dir-tabularcolumns" title="Permalink to this definition">¶</a></dt>
+<dd><p>This directive gives a &#8220;column spec&#8221; for the next table occurring in the
+source file.  The spec is the second argument to the LaTeX <tt class="docutils literal"><span class="pre">tabulary</span></tt>
+package&#8217;s environment (which Sphinx uses to translate tables).  It can have
+values like</p>
+<div class="highlight-rest"><div class="highlight"><pre>|l|l|l|
+</pre></div>
+</div>
+<p>which means three left-adjusted, nonbreaking columns.  For columns with
+longer text that should automatically be broken, use either the standard
+<tt class="docutils literal"><span class="pre">p{width}</span></tt> construct, or tabulary&#8217;s automatic specifiers:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">L</span></tt></td>
+<td>ragged-left column with automatic width</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">R</span></tt></td>
+<td>ragged-right column with automatic width</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">C</span></tt></td>
+<td>centered column with automatic width</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">J</span></tt></td>
+<td>justified column with automatic width</td>
+</tr>
+</tbody>
+</table>
+<p>The automatic width is determined by rendering the content in the table, and
+scaling them according to their share of the total width.</p>
+<p>By default, Sphinx uses a table layout with <tt class="docutils literal"><span class="pre">L</span></tt> for every column.</p>
+<p>
+<span class="versionmodified">New in version 0.3.</span></p>
+</dd></dl>
+
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Tables that contain literal blocks cannot be set with <tt class="docutils literal"><span class="pre">tabulary</span></tt>.  They are
+therefore set with the standard LaTeX <tt class="docutils literal"><span class="pre">tabular</span></tt> environment.  Also, the
+verbatim environment used for literal blocks only works in <tt class="docutils literal"><span class="pre">p{width}</span></tt>
+columns, which means that by default, Sphinx generates such column specs for
+such tables.  Use the <a class="reference internal" href="#dir-tabularcolumns"><tt class="xref docutils literal"><span class="pre">tabularcolumns</span></tt></a> directive to get finer control
+over such tables.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../builders.html" title="Available builders"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="inline.html" title="Inline markup"
+             >previous</a> |</li>
+        <li><a href="../index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a>&raquo;</li>
+
+          <li><a href="index.html" >Sphinx Markup Constructs</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2007-2009, Georg Brandl.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

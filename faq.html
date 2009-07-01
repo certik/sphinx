@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sphinx FAQ &mdash; Sphinx v0.6.2 documentation</title>
+    <link rel="stylesheet" href="static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Sphinx v0.6.2 documentation"
+          href="static/opensearch.xml"/>
+    <link rel="top" title="Sphinx v0.6.2 documentation" href="index.html" />
+    <link rel="next" title="Glossary" href="glossary.html" />
+    <link rel="prev" title="sphinx.ext.todo – Support for todo items" href="ext/todo.html" /> 
+  </head>
+  <body>
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<img src="static/sphinx.png" alt="Sphinx logo" />
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="glossary.html" title="Glossary"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ext/todo.html" title="sphinx.ext.todo – Support for todo items"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">Documentation</a>&raquo;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="contents.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Sphinx FAQ</a><ul>
+<li><a class="reference external" href="#how-do-i">How do I...</a></li>
+<li><a class="reference external" href="#using-sphinx-with">Using Sphinx with...</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="ext/todo.html"
+                                  title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">sphinx.ext.todo</span></tt> &#8211; Support for todo items</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="glossary.html"
+                                  title="next chapter">Glossary</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/faq.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sphinx-faq">
+<span id="faq"></span><h1>Sphinx FAQ<a class="headerlink" href="#sphinx-faq" title="Permalink to this headline">¶</a></h1>
+<p>This is a list of Frequently Asked Questions about Sphinx.  Feel free to
+suggest new entries!</p>
+<div class="section" id="how-do-i">
+<h2>How do I...<a class="headerlink" href="#how-do-i" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>... get section numbers?</dt>
+<dd>They are automatic in LaTeX output; for HTML, give a <tt class="docutils literal"><span class="pre">:numbered:</span></tt> option to
+the <a class="reference external" href="concepts.html#dir-toctree"><tt class="xref docutils literal"><span class="pre">toctree</span></tt></a> directive where you want to start numbering.</dd>
+<dt>... customize the look of the built HTML files?</dt>
+<dd>Use themes, see <a class="reference external" href="theming.html"><em>HTML theming support</em></a>.</dd>
+<dt>... add global substitutions or includes?</dt>
+<dd>Add them in the <a class="reference external" href="config.html#confval-rst_epilog"><tt class="xref docutils literal"><span class="pre">rst_epilog</span></tt></a> config value.</dd>
+<dt>... write my own extension?</dt>
+<dd>See the <a class="reference external" href="ext/tutorial.html#exttut"><em>extension tutorial</em></a>.</dd>
+<dt>... convert from my existing docs using MoinMoin markup?</dt>
+<dd>The easiest way is to convert to xhtml, then convert <a class="reference external" href="http://docutils.sourceforge.net/sandbox/xhtml2rest/xhtml2rest.py">xhtml to reST</a>.  You&#8217;ll
+still need to mark up classes and such, but the headings and code examples
+come through cleanly.</dd>
+</dl>
+</div>
+<div class="section" id="using-sphinx-with">
+<h2>Using Sphinx with...<a class="headerlink" href="#using-sphinx-with" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Epydoc</dt>
+<dd>There&#8217;s a third-party extension providing an <a class="reference external" href="http://git.savannah.gnu.org/cgit/kenozooid.git/tree/doc/extapi.py">api role</a> which refers to
+Epydoc&#8217;s API docs for a given identifier.</dd>
+<dt>Doxygen</dt>
+<dd>Michael Jones is developing a reST/Sphinx bridge to doxygen called <a class="reference external" href="http://github.com/michaeljones/breathe/tree/master">breathe</a>.</dd>
+<dt>SCons</dt>
+<dd>Glenn Hutchings has written a SCons build script to build Sphinx
+documentation; it is hosted here: <a class="reference external" href="http://bitbucket.org/zondo/sphinx-scons">http://bitbucket.org/zondo/sphinx-scons</a></dd>
+<dt>github pages</dt>
+<dd>You can use <a class="reference external" href="http://github.com/michaeljones/sphinx-to-github/tree/master">Michael Jones&#8217; sphinx-to-github tool</a> to prepare
+Sphinx HTML output.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="glossary.html" title="Glossary"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ext/todo.html" title="sphinx.ext.todo – Support for todo items"
+             >previous</a> |</li>
+        <li><a href="index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">Documentation</a>&raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2007-2009, Georg Brandl.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

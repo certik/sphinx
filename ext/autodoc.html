@@ -1,0 +1,492 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sphinx.ext.autodoc – Include documentation from docstrings &mdash; Sphinx v0.6.2 documentation</title>
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Sphinx v0.6.2 documentation"
+          href="../static/opensearch.xml"/>
+    <link rel="top" title="Sphinx v0.6.2 documentation" href="../index.html" />
+    <link rel="up" title="Sphinx Extensions" href="../extensions.html" />
+    <link rel="next" title="sphinx.ext.autosummary – Generate autodoc summaries" href="autosummary.html" />
+    <link rel="prev" title="Writing new builders" href="builderapi.html" /> 
+  </head>
+  <body>
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<img src="../static/sphinx.png" alt="Sphinx logo" />
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="autosummary.html" title="sphinx.ext.autosummary – Generate autodoc summaries"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="builderapi.html" title="Writing new builders"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a>&raquo;</li>
+
+          <li><a href="../extensions.html" accesskey="U">Sphinx Extensions</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../contents.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href=""><tt class="docutils literal"><span class="pre">sphinx.ext.autodoc</span></tt> &#8211; Include documentation from docstrings</a><ul>
+<li><a class="reference external" href="#docstring-preprocessing">Docstring preprocessing</a></li>
+<li><a class="reference external" href="#skipping-members">Skipping members</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="builderapi.html"
+                                  title="previous chapter">Writing new builders</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="autosummary.html"
+                                  title="next chapter"><tt class="docutils literal"><span class="pre">sphinx.ext.autosummary</span></tt> &#8211; Generate autodoc summaries</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../sources/ext/autodoc.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-sphinx.ext.autodoc">
+<h1><tt class="xref docutils literal"><span class="pre">sphinx.ext.autodoc</span></tt> &#8211; Include documentation from docstrings<a class="headerlink" href="#module-sphinx.ext.autodoc" title="Permalink to this headline">¶</a></h1>
+<p id="index-3">This extension can import the modules you are documenting, and pull in
+documentation from docstrings in a semi-automatic way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For Sphinx (actually, the Python interpreter that executes Sphinx) to find
+your module, it must be importable.  That means that the module or the
+package must be in one of the directories on <tt class="xref docutils literal"><span class="pre">sys.path</span></tt> &#8211; adapt your
+<tt class="xref docutils literal"><span class="pre">sys.path</span></tt> in the configuration file accordingly.</p>
+</div>
+<p>For this to work, the docstrings must of course be written in correct
+reStructuredText.  You can then use all of the usual Sphinx markup in the
+docstrings, and it will end up correctly in the documentation.  Together with
+hand-written documentation, this technique eases the pain of having to maintain
+two locations for documentation, while at the same time avoiding
+auto-generated-looking pure API documentation.</p>
+<p><tt class="xref docutils literal"><span class="pre">autodoc</span></tt> provides several directives that are versions of the usual
+<a class="reference external" href="../markup/desc.html#dir-module"><tt class="xref docutils literal"><span class="pre">module</span></tt></a>, <a class="reference external" href="../markup/desc.html#dir-class"><tt class="xref docutils literal"><span class="pre">class</span></tt></a> and so forth.  On parsing time, they import the
+corresponding module and extract the docstring of the given objects, inserting
+them into the page source under a suitable <a class="reference external" href="../markup/desc.html#dir-module"><tt class="xref docutils literal"><span class="pre">module</span></tt></a>, <a class="reference external" href="../markup/desc.html#dir-class"><tt class="xref docutils literal"><span class="pre">class</span></tt></a> etc.
+directive.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Just as <a class="reference external" href="../markup/desc.html#dir-class"><tt class="xref docutils literal"><span class="pre">class</span></tt></a> respects the current <a class="reference external" href="../markup/desc.html#dir-module"><tt class="xref docutils literal"><span class="pre">module</span></tt></a>, <a class="reference internal" href="#dir-autoclass"><tt class="xref docutils literal"><span class="pre">autoclass</span></tt></a>
+will also do so, and likewise with <a class="reference external" href="../markup/desc.html#dir-method"><tt class="xref docutils literal"><span class="pre">method</span></tt></a> and <a class="reference external" href="../markup/desc.html#dir-class"><tt class="xref docutils literal"><span class="pre">class</span></tt></a>.</p>
+</div>
+<dl class="directive">
+<dt id="dir-automodule">
+<tt class="descname">.. automodule::</tt><a class="headerlink" href="#dir-automodule" title="Permalink to this definition">¶</a></dt>
+<dt id="dir-autoclass">
+<tt class="descname">.. autoclass::</tt><a class="headerlink" href="#dir-autoclass" title="Permalink to this definition">¶</a></dt>
+<dt id="dir-autoexception">
+<tt class="descname">.. autoexception::</tt><a class="headerlink" href="#dir-autoexception" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<p>Document a module, class or exception.  All three directives will by default
+only insert the docstring of the object itself:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">autoclass</span><span class="p">::</span> <span class="k">Noodle</span>
+</pre></div>
+</div>
+<p>will produce source like this:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">class</span><span class="p">::</span> <span class="k">Noodle</span>
+
+   Noodle&#39;s docstring.
+</pre></div>
+</div>
+<p>The &#8220;auto&#8221; directives can also contain content of their own, it will be
+inserted into the resulting non-auto directive source after the docstring
+(but before any automatic member documentation).</p>
+<p>Therefore, you can also mix automatic and non-automatic member documentation,
+like so:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">autoclass</span><span class="p">::</span> <span class="k">Noodle</span>
+   <span class="nc">:members:</span> <span class="nf">eat, slurp</span>
+
+<span class="p">   ..</span> <span class="ow">method</span><span class="p">::</span> <span class="k">boil(time=10)</span>
+
+      Boil the noodle <span class="ge">*time*</span> minutes.
+</pre></div>
+</div>
+<p><strong>Options and advanced usage</strong></p>
+<ul>
+<li><p class="first">If you want to automatically document members, there&#8217;s a <tt class="docutils literal"><span class="pre">members</span></tt>
+option:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">autoclass</span><span class="p">::</span> <span class="k">Noodle</span>
+   :members:
+</pre></div>
+</div>
+<p>will document all non-private member functions and properties (that is,
+those whose name doesn&#8217;t start with <tt class="docutils literal"><span class="pre">_</span></tt>), while</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">autoclass</span><span class="p">::</span> <span class="k">Noodle</span>
+   <span class="nc">:members:</span> <span class="nf">eat, slurp</span>
+</pre></div>
+</div>
+<p>will document exactly the specified members.</p>
+</li>
+<li><p class="first">Members without docstrings will be left out, unless you give the
+<tt class="docutils literal"><span class="pre">undoc-members</span></tt> flag option:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">autoclass</span><span class="p">::</span> <span class="k">Noodle</span>
+   :members:
+   :undoc-members:
+</pre></div>
+</div>
+</li>
+<li><p class="first">For classes and exceptions, members inherited from base classes will be
+left out, unless you give the <tt class="docutils literal"><span class="pre">inherited-members</span></tt> flag option, in
+addition to <tt class="docutils literal"><span class="pre">members</span></tt>:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">autoclass</span><span class="p">::</span> <span class="k">Noodle</span>
+   :members:
+   :inherited-members:
+</pre></div>
+</div>
+<p>This can be combined with <tt class="docutils literal"><span class="pre">undoc-members</span></tt> to document <em>all</em> available
+members of the class or module.</p>
+<p>
+<span class="versionmodified">New in version 0.3.</span></p>
+</li>
+<li><p class="first">It&#8217;s possible to override the signature for explicitly documented callable
+objects (functions, methods, classes) with the regular syntax that will
+override the signature gained from introspection:</p>
+<div class="highlight-rest"><div class="highlight"><pre><span class="p">..</span> <span class="ow">autoclass</span><span class="p">::</span> <span class="k">Noodle(type)</span>
+
+<span class="p">   ..</span> <span class="ow">automethod</span><span class="p">::</span> <span class="k">eat(persona)</span>
+</pre></div>
+</div>
+<p>This is useful if the signature from the method is hidden by a decorator.</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</li>
+<li><p class="first">The <a class="reference internal" href="#dir-automodule"><tt class="xref docutils literal"><span class="pre">automodule</span></tt></a>, <a class="reference internal" href="#dir-autoclass"><tt class="xref docutils literal"><span class="pre">autoclass</span></tt></a> and <a class="reference internal" href="#dir-autoexception"><tt class="xref docutils literal"><span class="pre">autoexception</span></tt></a> directives
+also support a flag option called <tt class="docutils literal"><span class="pre">show-inheritance</span></tt>.  When given, a list
+of base classes will be inserted just below the class signature (when used
+with <a class="reference internal" href="#dir-automodule"><tt class="xref docutils literal"><span class="pre">automodule</span></tt></a>, this will be inserted for every class that is
+documented in the module).</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</li>
+<li><p class="first">All autodoc directives support the <tt class="docutils literal"><span class="pre">noindex</span></tt> flag option that has the
+same effect as for standard <a class="reference external" href="../markup/desc.html#dir-function"><tt class="xref docutils literal"><span class="pre">function</span></tt></a> etc. directives: no index
+entries are generated for the documented object (and all autodocumented
+members).</p>
+<p>
+<span class="versionmodified">New in version 0.4.</span></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#dir-automodule"><tt class="xref docutils literal"><span class="pre">automodule</span></tt></a> also recognizes the <tt class="docutils literal"><span class="pre">synopsis</span></tt>, <tt class="docutils literal"><span class="pre">platform</span></tt> and
+<tt class="docutils literal"><span class="pre">deprecated</span></tt> options that the standard <a class="reference external" href="../markup/desc.html#dir-module"><tt class="xref docutils literal"><span class="pre">module</span></tt></a> directive supports.</p>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#dir-automodule"><tt class="xref docutils literal"><span class="pre">automodule</span></tt></a> and <a class="reference internal" href="#dir-autoclass"><tt class="xref docutils literal"><span class="pre">autoclass</span></tt></a> also has an <tt class="docutils literal"><span class="pre">member-order</span></tt> option
+that can be used to override the global value of
+<a class="reference internal" href="#confval-autodoc_member_order"><tt class="xref docutils literal"><span class="pre">autodoc_member_order</span></tt></a> for one directive.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p class="first">The directives supporting member documentation also have a
+<tt class="docutils literal"><span class="pre">exclude-members</span></tt> option that can be used to exclude single member names
+from documentation, if all members are to be documented.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</li>
+</ul>
+<blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In an <a class="reference internal" href="#dir-automodule"><tt class="xref docutils literal"><span class="pre">automodule</span></tt></a> directive with the <tt class="docutils literal"><span class="pre">members</span></tt> option set, only
+module members whose <tt class="docutils literal"><span class="pre">__module__</span></tt> attribute is equal to the module name
+as given to <tt class="docutils literal"><span class="pre">automodule</span></tt> will be documented.  This is to prevent
+documentation of imported classes or functions.</p>
+</div>
+</blockquote>
+</dd></dl>
+
+<dl class="directive">
+<dt id="dir-autofunction">
+<tt class="descname">.. autofunction::</tt><a class="headerlink" href="#dir-autofunction" title="Permalink to this definition">¶</a></dt>
+<dt id="dir-autodata">
+<tt class="descname">.. autodata::</tt><a class="headerlink" href="#dir-autodata" title="Permalink to this definition">¶</a></dt>
+<dt id="dir-automethod">
+<tt class="descname">.. automethod::</tt><a class="headerlink" href="#dir-automethod" title="Permalink to this definition">¶</a></dt>
+<dt id="dir-autoattribute">
+<tt class="descname">.. autoattribute::</tt><a class="headerlink" href="#dir-autoattribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>These work exactly like <a class="reference internal" href="#dir-autoclass"><tt class="xref docutils literal"><span class="pre">autoclass</span></tt></a> etc., but do not offer the options
+used for automatic member documentation.</p>
+<p>For module data members and class attributes, documentation can either be put
+into a special-formatted comment <em>before</em> the attribute definition, or in a
+docstring <em>after</em> the definition.  This means that in the following class
+definition, both attributes can be autodocumented:</p>
+<div class="highlight-rest"><div class="highlight"><pre>class Foo:
+    &quot;&quot;&quot;Docstring for class Foo.&quot;&quot;&quot;
+
+    #: Doc comment for attribute Foo.bar.
+    bar = 1
+
+    baz = 2
+    &quot;&quot;&quot;Docstring for attribute Foo.baz.&quot;&quot;&quot;
+</pre></div>
+</div>
+<p>
+<span class="versionmodified">Changed in version 0.6: </span><a class="reference internal" href="#dir-autodata"><tt class="xref docutils literal"><span class="pre">autodata</span></tt></a> and <a class="reference internal" href="#dir-autoattribute"><tt class="xref docutils literal"><span class="pre">autoattribute</span></tt></a> can now extract docstrings.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you document decorated functions or methods, keep in mind that autodoc
+retrieves its docstrings by importing the module and inspecting the
+<tt class="docutils literal"><span class="pre">__doc__</span></tt> attribute of the given function or method.  That means that if
+a decorator replaces the decorated function with another, it must copy the
+original <tt class="docutils literal"><span class="pre">__doc__</span></tt> to the new function.</p>
+<p class="last">From Python 2.5, <tt class="xref docutils literal"><span class="pre">functools.wraps()</span></tt> can be used to create
+well-behaved decorating functions.</p>
+</div>
+</dd></dl>
+
+<p>There are also new config values that you can set:</p>
+<dl class="confval">
+<dt id="confval-autoclass_content">
+<tt class="descname">autoclass_content</tt><a class="headerlink" href="#confval-autoclass_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>This value selects what content will be inserted into the main body of an
+<a class="reference internal" href="#dir-autoclass"><tt class="xref docutils literal"><span class="pre">autoclass</span></tt></a> directive.  The possible values are:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">&quot;class&quot;</span></tt></dt>
+<dd>Only the class&#8217; docstring is inserted.  This is the default.  You can
+still document <tt class="docutils literal"><span class="pre">__init__</span></tt> as a separate method using <a class="reference internal" href="#dir-automethod"><tt class="xref docutils literal"><span class="pre">automethod</span></tt></a>
+or the <tt class="docutils literal"><span class="pre">members</span></tt> option to <a class="reference internal" href="#dir-autoclass"><tt class="xref docutils literal"><span class="pre">autoclass</span></tt></a>.</dd>
+<dt><tt class="docutils literal"><span class="pre">&quot;both&quot;</span></tt></dt>
+<dd>Both the class&#8217; and the <tt class="docutils literal"><span class="pre">__init__</span></tt> method&#8217;s docstring are concatenated
+and inserted.</dd>
+<dt><tt class="docutils literal"><span class="pre">&quot;init&quot;</span></tt></dt>
+<dd>Only the <tt class="docutils literal"><span class="pre">__init__</span></tt> method&#8217;s docstring is inserted.</dd>
+</dl>
+<p>
+<span class="versionmodified">New in version 0.3.</span></p>
+</dd></dl>
+
+<dl class="confval">
+<dt id="confval-autodoc_member_order">
+<tt class="descname">autodoc_member_order</tt><a class="headerlink" href="#confval-autodoc_member_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>This value selects if automatically documented members are sorted
+alphabetical (value <tt class="docutils literal"><span class="pre">'alphabetical'</span></tt>) or by member type (value
+<tt class="docutils literal"><span class="pre">'groupwise'</span></tt>).  The default is alphabetical.</p>
+<p>
+<span class="versionmodified">New in version 0.6.</span></p>
+</dd></dl>
+
+<div class="section" id="docstring-preprocessing">
+<h2>Docstring preprocessing<a class="headerlink" href="#docstring-preprocessing" title="Permalink to this headline">¶</a></h2>
+<p>autodoc provides the following additional events:</p>
+<dl class="event">
+<dt id="event-autodoc-process-docstring">
+<tt class="descname">autodoc-process-docstring</tt><big>(</big><em>app</em>, <em>what</em>, <em>name</em>, <em>obj</em>, <em>options</em>, <em>lines</em><big>)</big><a class="headerlink" href="#event-autodoc-process-docstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>
+<span class="versionmodified">New in version 0.4.</span></p>
+<p>Emitted when autodoc has read and processed a docstring.  <em>lines</em> is a list
+of strings &#8211; the lines of the processed docstring &#8211; that the event handler
+can modify <strong>in place</strong> to change what Sphinx puts into the output.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>app</em> &#8211; the Sphinx application object</li>
+<li><em>what</em> &#8211; the type of the object which the docstring belongs to (one of
+<tt class="docutils literal"><span class="pre">&quot;module&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;class&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;exception&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;function&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;method&quot;</span></tt>,
+<tt class="docutils literal"><span class="pre">&quot;attribute&quot;</span></tt>)</li>
+<li><em>name</em> &#8211; the fully qualified name of the object</li>
+<li><em>obj</em> &#8211; the object itself</li>
+<li><em>options</em> &#8211; the options given to the directive: an object with attributes
+<tt class="docutils literal"><span class="pre">inherited_members</span></tt>, <tt class="docutils literal"><span class="pre">undoc_members</span></tt>, <tt class="docutils literal"><span class="pre">show_inheritance</span></tt> and
+<tt class="docutils literal"><span class="pre">noindex</span></tt> that are true if the flag option of same name was given to the
+auto directive</li>
+<li><em>lines</em> &#8211; the lines of the docstring, see above</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="event">
+<dt id="event-autodoc-process-signature">
+<tt class="descname">autodoc-process-signature</tt><big>(</big><em>app</em>, <em>what</em>, <em>name</em>, <em>obj</em>, <em>options</em>, <em>signature</em>, <em>return_annotation</em><big>)</big><a class="headerlink" href="#event-autodoc-process-signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<p>Emitted when autodoc has formatted a signature for an object. The event
+handler can return a new tuple <tt class="docutils literal"><span class="pre">(signature,</span> <span class="pre">return_annotation)</span></tt> to change
+what Sphinx puts into the output.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>app</em> &#8211; the Sphinx application object</li>
+<li><em>what</em> &#8211; the type of the object which the docstring belongs to (one of
+<tt class="docutils literal"><span class="pre">&quot;module&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;class&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;exception&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;function&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;method&quot;</span></tt>,
+<tt class="docutils literal"><span class="pre">&quot;attribute&quot;</span></tt>)</li>
+<li><em>name</em> &#8211; the fully qualified name of the object</li>
+<li><em>obj</em> &#8211; the object itself</li>
+<li><em>options</em> &#8211; the options given to the directive: an object with attributes
+<tt class="docutils literal"><span class="pre">inherited_members</span></tt>, <tt class="docutils literal"><span class="pre">undoc_members</span></tt>, <tt class="docutils literal"><span class="pre">show_inheritance</span></tt> and
+<tt class="docutils literal"><span class="pre">noindex</span></tt> that are true if the flag option of same name was given to the
+auto directive</li>
+<li><em>signature</em> &#8211; function signature, as a string of the form
+<tt class="docutils literal"><span class="pre">&quot;(parameter_1,</span> <span class="pre">parameter_2)&quot;</span></tt>, or <tt class="xref docutils literal"><span class="pre">None</span></tt> if introspection didn&#8217;t succeed
+and signature wasn&#8217;t specified in the directive.</li>
+<li><em>return_annotation</em> &#8211; function return annotation as a string of the form
+<tt class="docutils literal"><span class="pre">&quot;</span> <span class="pre">-&gt;</span> <span class="pre">annotation&quot;</span></tt>, or <tt class="xref docutils literal"><span class="pre">None</span></tt> if there is no return annotation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>The <tt class="xref docutils literal"><span class="pre">sphinx.ext.autodoc</span></tt> module provides factory functions for commonly
+needed docstring processing in event <a class="reference internal" href="#event-autodoc-process-docstring"><tt class="xref docutils literal"><span class="pre">autodoc-process-docstring</span></tt></a>:</p>
+<dl class="function">
+<dt id="sphinx.ext.autodoc.cut_lines">
+<tt class="descclassname">sphinx.ext.autodoc.</tt><tt class="descname">cut_lines</tt><big>(</big><em>pre</em>, <em>post=0</em>, <em>what=None</em><big>)</big><a class="headerlink" href="#sphinx.ext.autodoc.cut_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a listener that removes the first <em>pre</em> and last <em>post</em>
+lines of every docstring.  If <em>what</em> is a sequence of strings,
+only docstrings of a type in <em>what</em> will be processed.</p>
+<p>Use like this (e.g. in the <tt class="docutils literal"><span class="pre">setup()</span></tt> function of <tt class="docutils literal"><span class="pre">conf.py</span></tt>):</p>
+<div class="highlight-rest"><div class="highlight"><pre>from sphinx.ext.autodoc import cut_lines
+app.connect(&#39;autodoc-process-docstring&#39;, cut_lines(4, what=[&#39;module&#39;]))
+</pre></div>
+</div>
+<p>This can (and should) be used in place of <tt class="xref docutils literal"><span class="pre">automodule_skip_lines</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx.ext.autodoc.between">
+<tt class="descclassname">sphinx.ext.autodoc.</tt><tt class="descname">between</tt><big>(</big><em>marker</em>, <em>what=None</em>, <em>keepempty=False</em><big>)</big><a class="headerlink" href="#sphinx.ext.autodoc.between" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a listener that only keeps lines between lines that match the
+<em>marker</em> regular expression.  If no line matches, the resulting docstring
+would be empty, so no change will be made unless <em>keepempty</em> is true.</p>
+<p>If <em>what</em> is a sequence of strings, only docstrings of a type in <em>what</em> will
+be processed.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="skipping-members">
+<h2>Skipping members<a class="headerlink" href="#skipping-members" title="Permalink to this headline">¶</a></h2>
+<p>autodoc allows the user to define a custom method for determining whether a
+member should be included in the documentation by using the following event:</p>
+<dl class="event">
+<dt id="event-autodoc-skip-member">
+<tt class="descname">autodoc-skip-member</tt><big>(</big><em>app</em>, <em>what</em>, <em>name</em>, <em>obj</em>, <em>skip</em>, <em>options</em><big>)</big><a class="headerlink" href="#event-autodoc-skip-member" title="Permalink to this definition">¶</a></dt>
+<dd><p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<p>Emitted when autodoc has to decide whether a member should be included in the
+documentation.  The member is excluded if a handler returns <tt class="xref docutils literal"><span class="pre">True</span></tt>.  It is
+included if the handler returns <tt class="xref docutils literal"><span class="pre">False</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>app</em> &#8211; the Sphinx application object</li>
+<li><em>what</em> &#8211; the type of the object which the docstring belongs to (one of
+<tt class="docutils literal"><span class="pre">&quot;module&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;class&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;exception&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;function&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;method&quot;</span></tt>,
+<tt class="docutils literal"><span class="pre">&quot;attribute&quot;</span></tt>)</li>
+<li><em>name</em> &#8211; the fully qualified name of the object</li>
+<li><em>obj</em> &#8211; the object itself</li>
+<li><em>skip</em> &#8211; a boolean indicating if autodoc will skip this member if the user
+handler does not override the decision</li>
+<li><em>options</em> &#8211; the options given to the directive: an object with attributes
+<tt class="docutils literal"><span class="pre">inherited_members</span></tt>, <tt class="docutils literal"><span class="pre">undoc_members</span></tt>, <tt class="docutils literal"><span class="pre">show_inheritance</span></tt> and
+<tt class="docutils literal"><span class="pre">noindex</span></tt> that are true if the flag option of same name was given to the
+auto directive</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="autosummary.html" title="sphinx.ext.autosummary – Generate autodoc summaries"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="builderapi.html" title="Writing new builders"
+             >previous</a> |</li>
+        <li><a href="../index.html">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="../contents.html">Documentation</a>&raquo;</li>
+
+          <li><a href="../extensions.html" >Sphinx Extensions</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2007-2009, Georg Brandl.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>

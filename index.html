@@ -1,80 +1,195 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-	<title>certik/sphinx @ GitHub</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-  		background-color: #c90add;
-		  font-family: "helvetica"; 
-  		color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-		h1 { font-size: 3.8em; color: #36f522; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #36f522; }
-    h3 { text-align: center; color: #36f522; }
-    a { color: #36f522; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
-</head>
-
-<body>
-  <a href="http://github.com/certik/sphinx"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-  
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/certik/sphinx/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/certik/sphinx/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-      
-    <h1><a href="http://github.com/certik/sphinx">sphinx</a> 
-      <span class="small">by <a href="http://github.com/certik">certik</a></span></h1>
-
-    <div class="description">
-      
-    </div>
-
-    <h2>Authors</h2>
-<p>Ondrej Certik (ondrej@certik.cz)<br/><br/>      </p>
-<h2>Contact</h2>
-<p> (ondrej@certik.cz)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/certik/sphinx/zipball/master">zip</a> or
-      <a href="http://github.com/certik/sphinx/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/certik/sphinx</pre>
-    </p>
-      
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/certik/sphinx">certik/sphinx</a>
-    </div>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
+    <title>Overview &mdash; Sphinx v0.6.2 documentation</title>
+    <link rel="stylesheet" href="static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.6.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Sphinx v0.6.2 documentation"
+          href="static/opensearch.xml"/>
+    <link rel="top" title="Sphinx v0.6.2 documentation" href="" /> 
+  </head>
+  <body>
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<img src="static/sphinx.png" alt="Sphinx logo" />
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li><a href="">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">Documentation</a>&raquo;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+          <h3>Download</h3>
+
+<p>Current version: <b>0.6.2</b></p>
+<p>Get Sphinx from the <a href="http://pypi.python.org/pypi/Sphinx">Python Package
+Index</a>, or install it with:</p>
+<pre>easy_install -U Sphinx</pre>
+
+
+<h3>Questions? Suggestions?</h3>
+
+<p>Join the <a href="http://groups.google.com/group/sphinx-dev">Google group</a>:</p>
+<form action="http://groups.google.com/group/sphinx-dev/boxsubscribe"
+      style="padding-left: 1em">
+  <input type="text" name="email" value="your@email"/>
+  <input type="submit" name="sub" value="Subscribe" />
+</form>
+<p>or come to the <tt>#python-docs</tt> channel on FreeNode.</p>
+<p>You can also open an issue at the
+  <a href="http://www.bitbucket.org/birkenfeld/sphinx/issues/">tracker</a>.</p>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Welcome</h1>
+
+  <div class="quotebar">
+    <p>What users say:</p>
+    <p>&ldquo;Cheers for a great tool that actually makes programmers <b>want</b>
+      to write documentation!&rdquo;</p>
   </div>
 
-  
-</body>
+  <p>
+    Sphinx is a tool that makes it easy to create intelligent and beautiful
+    documentation, written by Georg Brandl and licensed under the BSD license.</p>
+  <p>It was originally created to translate <a href="http://docs.python.org/dev/">the
+    new Python documentation</a>, and it has excellent support for the documentation
+    of Python projects, but other documents can be written with it too.  Of course,
+    this site is also created from reStructuredText sources using Sphinx!
+  </p>
+  <p>
+    It is still under constant development, and the following features are
+    already present, work fine and can be seen &#8220;in action&#8221; in the
+    Python docs:
+  </p>
+  <ul>
+    <li><b>Output formats:</b> HTML (including Windows HTML Help) and LaTeX, for
+    printable PDF versions</li>
+    <li><b>Extensive cross-references:</b> semantic markup and automatic links
+    for functions, classes, glossary terms and similar pieces of information</li>
+    <li><b>Hierarchical structure:</b> easy definition of a document tree, with
+    automatic links to siblings, parents and children</li>
+    <li><b>Automatic indices:</b> general index as well as a module index</li>
+    <li><b>Code handling:</b> automatic highlighting using the <a
+    href="http://pygments.org">Pygments</a> highlighter</li>
+    <li><b>Extensions:</b> automatic testing of code snippets, inclusion of
+    docstrings from Python modules, and more</li>
+  </ul>
+  <p>
+    Sphinx uses <a href="http://docutils.sf.net/rst.html">reStructuredText</a>
+    as its markup language, and many of its strengths come from the power and
+    straightforwardness of reStructuredText and its parsing and translating
+    suite, the <a href="http://docutils.sf.net/">Docutils</a>.
+  </p>
+
+  <h2>Examples</h2>
+  <p>
+    The <a href="http://docs.python.org/dev/">Python documentation</a> and
+    this page are different examples of Sphinx in use.
+    You can also download a <a href="http://sphinx.pocoo.org/sphinx.pdf">PDF version</a>
+    of the Sphinx documentation, generated from the LaTeX Sphinx produces.
+  </p>
+  <p>
+    For examples of how Sphinx source files look, use the &#8220;Show source&#8221;
+    links on all pages of the documentation apart from this welcome page.
+  </p>
+  <p>Links to more documentation generated with Sphinx can be found on the
+    <a href="examples.html">Projects using Sphinx</a> page.
+  </p>
+
+  <h2>Documentation</h2>
+  <table class="contentstable" align="center" style="margin-left: 30px"><tr>
+    <td width="50%">
+      <p class="biglink"><a class="biglink" href="contents.html">Contents</a><br/>
+         <span class="linkdescr">for a complete overview</span></p>
+      <p class="biglink"><a class="biglink" href="search.html">Search page</a><br/>
+         <span class="linkdescr">search the documentation</span></p>
+    </td><td width="50%">
+      <p class="biglink"><a class="biglink" href="genindex.html">General Index</a><br/>
+         <span class="linkdescr">all functions, classes, terms</span></p>
+      <p class="biglink"><a class="biglink" href="modindex.html">Module Index</a><br/>
+         <span class="linkdescr">quick access to all documented modules</span></p>
+    </td></tr>
+  </table>
+
+  <h2>Get Sphinx</h2>
+  <p>
+    Sphinx is available as an <a
+    href="http://peak.telecommunity.com/DevCenter/EasyInstall">easy-install</a>able
+    package on the <a href="http://pypi.python.org/pypi/Sphinx">Python Package
+    Index</a>.
+  </p>
+  <p>The code can be found in a Mercurial repository, at
+    <tt>http://bitbucket.org/birkenfeld/sphinx/</tt>.</p>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li><a href="">Sphinx home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">Documentation</a>&raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2007-2009, Georg Brandl.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
 </html>
